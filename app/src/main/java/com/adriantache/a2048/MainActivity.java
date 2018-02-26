@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
     //mark board full if appropriate
     boolean boardFull = false;
 
+    //triggers to determine board is stuck
+    boolean cannotMoveDown = false;
+    boolean cannotMoveUp = false;
+    boolean cannotMoveRight = false;
+    boolean cannotMoveLeft = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
         while (amount > 0 && !boardFull) {
             detectFullBoard();
 
-            int row = random.nextInt(3);
-            int column = random.nextInt(3);
+            int row = random.nextInt(4);
+            int column = random.nextInt(4);
 
             if (board[row][column] == 0) {
-                int number = random.nextInt(1);
-                number+=1;
+                int number = random.nextInt(2);
+                number += 1;
                 number *= 2;
 
                 board[row][column] = number;
@@ -119,8 +125,75 @@ public class MainActivity extends AppCompatActivity {
 
     //react to button down (starting with this since it's the simplest case)
     public void btnDown(View v) {
+        //create a new matrix to temporarily store values
+        int[][] boardCopy = new int[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                boardCopy[i][j] = board[i][j];
+            }
+        }
 
+        //determine if board has moved
+        boolean boardMoved = false;
 
+        for (int i = 0; i <3; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] != 0) {
+
+                    for (int k = i + 1; k < 4; k++) {
+                        if (board[k][j] == board[i][j]) {
+                            int temp = boardCopy[i][j] * 2;
+                            board[i][j]=0;
+                            board[k][j]=0;
+                            boardCopy[i][j] = 0;
+                            boardCopy[k][j] = temp;
+                            boardMoved = true;
+                            break;
+                        } else if (board[k][j] != 0 && k > i + 1) {
+                            int temp = boardCopy[i][j];
+                            boardCopy[i][j] = 0;
+                            boardCopy[k-1][j] = temp;
+                            boardMoved = true;
+                            break;
+                        } else if (board[k][j]!=0) {
+                            break;
+                        }
+
+                        if (k == 3 && board[k][j] == 0) {
+                            int temp = boardCopy[i][j];
+                            boardCopy[i][j] = 0;
+                            boardCopy[k][j] = temp;
+                            boardMoved = true;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        //test if board actually "moved"
+        if (!boardMoved) {
+            //set flag to determine game loss possibility
+            cannotMoveDown = true;
+
+            //test for game loss
+            gameLoss();
+        } else {
+            cannotMoveDown = false;
+
+            //copy all values back to main board
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    board[i][j] = boardCopy[i][j];
+                }
+            }
+
+            //add one more number
+            generateNewNumbers(1);
+
+            //update display
+            updateScores();
+        }
     }
 
     //react to button up
@@ -128,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
 
     //react to button left
@@ -139,6 +211,13 @@ public class MainActivity extends AppCompatActivity {
     //react to button right
     public void btnRight(View v) {
 
+    }
+
+    private void gameLoss() {
+        if (cannotMoveDown&&cannotMoveLeft&&cannotMoveRight&&cannotMoveUp){
+            TextView score = findViewById(R.id.score);
+            score.setText("Game Over");
+        }
     }
 
 }
