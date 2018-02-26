@@ -127,7 +127,9 @@ public class MainActivity extends AppCompatActivity {
     public void btnDown(View v) {
         //create a new matrix to temporarily store values
         int[][] boardCopy = new int[4][4];
-        System.arraycopy(board,0,boardCopy,0,4);
+        for (int i = 0; i < 4; i++) {
+            System.arraycopy(board[i], 0, boardCopy[i], 0, 4);
+        }
 
         //determine if board has moved
         boolean boardMoved = false;
@@ -169,24 +171,34 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //remove blank spaces between cells
+//        //remove blank spaces between cells
+//        for (int j = 0; j < 4; j++) {
+//            if (boardCopy[3][j] != 0) {
+//                if (boardCopy[2][j] == 0) {
+//                    if (boardCopy[1][j] != 0) {
+//                        boardCopy[2][j] = boardCopy[1][j];
+//                        boardCopy[1][j] = 0;
+//                    } else if (boardCopy[0][j] != 0) {
+//                        boardCopy[2][j] = boardCopy[0][j];
+//                        boardCopy[0][j] = 0;
+//                    }
+//                }
+//            }
+//
+//            if (boardCopy[2][j] != 0 && boardCopy[1][j] == 0 && boardCopy[0][j] != 0) {
+//                boardCopy[1][j] = boardCopy[0][j];
+//                boardCopy[0][j] = 0;
+//            }
+//        }
+
+        //better system to remove blank spaces
         for (int j = 0; j < 4; j++) {
-            if (boardCopy[3][j] != 0) {
-                if (boardCopy[2][j] == 0) {
-                    if (boardCopy[1][j] != 0) {
-                        boardCopy[2][j] = boardCopy[1][j];
-                        boardCopy[1][j] = 0;
-                    } else if (boardCopy[0][j] != 0) {
-                        boardCopy[2][j] = boardCopy[0][j];
-                        boardCopy[0][j] = 0;
-                    }
-                }
+            int counter = 3;
+
+            for (int i = 3; i >= 0; i--) {
+                if (boardCopy[i][j] != 0) boardCopy[counter][j] = boardCopy[i][j];
             }
 
-            if (boardCopy[2][j] != 0 && boardCopy[1][j] == 0 && boardCopy[0][j] != 0) {
-                boardCopy[1][j] = boardCopy[0][j];
-                boardCopy[0][j] = 0;
-            }
         }
 
 
@@ -201,8 +213,9 @@ public class MainActivity extends AppCompatActivity {
             cannotMoveDown = false;
 
             //copy all values back to main board
-            System.arraycopy(boardCopy,0,board,0,4);
-
+            for (int i = 0; i < 4; i++) {
+                System.arraycopy(boardCopy[i], 0, board[i], 0, 4);
+            }
             //add one more number
             generateNewNumbers(1);
 
