@@ -127,24 +127,23 @@ public class MainActivity extends AppCompatActivity {
     public void btnDown(View v) {
         //create a new matrix to temporarily store values
         int[][] boardCopy = new int[4][4];
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                boardCopy[i][j] = board[i][j];
-            }
-        }
+        System.arraycopy(board,0,boardCopy,0,4);
 
         //determine if board has moved
         boolean boardMoved = false;
 
-        for (int i = 0; i <3; i++) {
-            for (int j = 0; j < 4; j++) {
+        //todo prevent merging numbers twice (haven't I done this already?!)
+
+        //do something if you detect a full cell
+        for (int j = 0; j < 4; j++) {
+            for (int i = 0; i < 3; i++) {
                 if (board[i][j] != 0) {
 
                     for (int k = i + 1; k < 4; k++) {
                         if (board[k][j] == board[i][j]) {
                             int temp = boardCopy[i][j] * 2;
-                            board[i][j]=0;
-                            board[k][j]=0;
+                            board[i][j] = 0;
+                            board[k][j] = 0;
                             boardCopy[i][j] = 0;
                             boardCopy[k][j] = temp;
                             boardMoved = true;
@@ -152,10 +151,10 @@ public class MainActivity extends AppCompatActivity {
                         } else if (board[k][j] != 0 && k > i + 1) {
                             int temp = boardCopy[i][j];
                             boardCopy[i][j] = 0;
-                            boardCopy[k-1][j] = temp;
+                            boardCopy[k - 1][j] = temp;
                             boardMoved = true;
                             break;
-                        } else if (board[k][j]!=0) {
+                        } else if (board[k][j] != 0) {
                             break;
                         }
 
@@ -166,10 +165,30 @@ public class MainActivity extends AppCompatActivity {
                             boardMoved = true;
                         }
                     }
-
                 }
             }
         }
+
+        //remove blank spaces between cells
+        for (int j = 0; j < 4; j++) {
+            if (boardCopy[3][j] != 0) {
+                if (boardCopy[2][j] == 0) {
+                    if (boardCopy[1][j] != 0) {
+                        boardCopy[2][j] = boardCopy[1][j];
+                        boardCopy[1][j] = 0;
+                    } else if (boardCopy[0][j] != 0) {
+                        boardCopy[2][j] = boardCopy[0][j];
+                        boardCopy[0][j] = 0;
+                    }
+                }
+            }
+
+            if (boardCopy[2][j] != 0 && boardCopy[1][j] == 0 && boardCopy[0][j] != 0) {
+                boardCopy[1][j] = boardCopy[0][j];
+                boardCopy[0][j] = 0;
+            }
+        }
+
 
         //test if board actually "moved"
         if (!boardMoved) {
@@ -182,11 +201,7 @@ public class MainActivity extends AppCompatActivity {
             cannotMoveDown = false;
 
             //copy all values back to main board
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 4; j++) {
-                    board[i][j] = boardCopy[i][j];
-                }
-            }
+            System.arraycopy(boardCopy,0,board,0,4);
 
             //add one more number
             generateNewNumbers(1);
@@ -214,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void gameLoss() {
-        if (cannotMoveDown&&cannotMoveLeft&&cannotMoveRight&&cannotMoveUp){
+        if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
             TextView score = findViewById(R.id.score);
             score.setText("Game Over");
         }
