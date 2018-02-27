@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         //todo prevent merging numbers twice (haven't I done this already?!)
 
-        //do something if you detect a full cell
+        //do stuff if you detect a full cell
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 3; i++) {
                 if (board[i][j] != 0) {
@@ -171,36 +171,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-//        //remove blank spaces between cells
-//        for (int j = 0; j < 4; j++) {
-//            if (boardCopy[3][j] != 0) {
-//                if (boardCopy[2][j] == 0) {
-//                    if (boardCopy[1][j] != 0) {
-//                        boardCopy[2][j] = boardCopy[1][j];
-//                        boardCopy[1][j] = 0;
-//                    } else if (boardCopy[0][j] != 0) {
-//                        boardCopy[2][j] = boardCopy[0][j];
-//                        boardCopy[0][j] = 0;
-//                    }
-//                }
-//            }
-//
-//            if (boardCopy[2][j] != 0 && boardCopy[1][j] == 0 && boardCopy[0][j] != 0) {
-//                boardCopy[1][j] = boardCopy[0][j];
-//                boardCopy[0][j] = 0;
-//            }
-//        }
-
-        //better system to remove blank spaces
+        //better system to remove blank spaces between cells
         for (int j = 0; j < 4; j++) {
             int counter = 3;
 
             for (int i = 3; i >= 0; i--) {
-                if (boardCopy[i][j] != 0) boardCopy[counter][j] = boardCopy[i][j];
+                if (boardCopy[i][j] != 0) {
+                    boardCopy[counter][j] = boardCopy[i][j];
+                    counter--;
+                }
             }
 
         }
-
 
         //test if board actually "moved"
         if (!boardMoved) {
@@ -216,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < 4; i++) {
                 System.arraycopy(boardCopy[i], 0, board[i], 0, 4);
             }
+
             //add one more number
             generateNewNumbers(1);
 
@@ -226,10 +209,90 @@ public class MainActivity extends AppCompatActivity {
 
     //react to button up
     public void btnUp(View v) {
+        //create a new matrix to temporarily store values
+        int[][] boardCopy = new int[4][4];
+        for (int i = 0; i < 4; i++) {
+            System.arraycopy(board[i], 0, boardCopy[i], 0, 4);
+        }
 
+        //determine if board has moved
+        boolean boardMoved = false;
+
+        //todo prevent merging numbers twice (haven't I done this already?!)
+
+        //todo why isn't this working? let's test it
+
+        //do stuff if you detect a full cell
+        for (int j = 0; j < 4; j++) {
+            for (int i = 3; i > 0; i--) {
+                if (board[i][j] != 0) {
+
+                    for (int k = i - 1; k >= 0; k--) {
+                        if (board[k][j] == board[i][j]) {
+                            int temp = boardCopy[i][j] * 2;
+                            board[i][j] = 0;
+                            board[k][j] = 0;
+                            boardCopy[i][j] = 0;
+                            boardCopy[k][j] = temp;
+                            boardMoved = true;
+                            break;
+                        } else if (board[k][j] != 0 && k < i - 1) {
+                            int temp = boardCopy[i][j];
+                            boardCopy[i][j] = 0;
+                            boardCopy[k + 1][j] = temp;
+                            boardMoved = true;
+                            break;
+                        } else if (board[k][j] != 0) {
+                            break;
+                        }
+
+                        if (k == 0 && board[k][j] == 0) {
+                            int temp = boardCopy[i][j];
+                            boardCopy[i][j] = 0;
+                            boardCopy[k][j] = temp;
+                            boardMoved = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        //better system to remove blank spaces between cells
+        for (int j = 0; j < 4; j++) {
+            int counter = 0;
+
+            for (int i = 3; i >= 0; i--) {
+                if (boardCopy[i][j] != 0) {
+                    boardCopy[counter][j] = boardCopy[i][j];
+                    counter++;
+                }
+            }
+
+        }
+
+        //test if board actually "moved"
+        if (!boardMoved) {
+            //set flag to determine game loss possibility
+            cannotMoveUp = true;
+
+            //test for game loss
+            gameLoss();
+        } else {
+            cannotMoveUp = false;
+
+            //copy all values back to main board
+            for (int i = 0; i < 4; i++) {
+                System.arraycopy(boardCopy[i], 0, board[i], 0, 4);
+            }
+
+            //add one more number
+            generateNewNumbers(1);
+
+            //update display
+            updateScores();
+        }
 
     }
-
 
     //react to button left
     public void btnLeft(View v) {
