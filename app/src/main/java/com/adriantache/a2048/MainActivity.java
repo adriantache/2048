@@ -71,22 +71,22 @@ public class MainActivity extends AppCompatActivity {
 
     //set all scores based on the board values
     private void updateScores() {
-        column11.setText(String.valueOf(board[0][0]));
-        column12.setText(String.valueOf(board[0][1]));
-        column13.setText(String.valueOf(board[0][2]));
-        column14.setText(String.valueOf(board[0][3]));
-        column21.setText(String.valueOf(board[1][0]));
-        column22.setText(String.valueOf(board[1][1]));
-        column23.setText(String.valueOf(board[1][2]));
-        column24.setText(String.valueOf(board[1][3]));
-        column31.setText(String.valueOf(board[2][0]));
-        column32.setText(String.valueOf(board[2][1]));
-        column33.setText(String.valueOf(board[2][2]));
-        column34.setText(String.valueOf(board[2][3]));
-        column41.setText(String.valueOf(board[3][0]));
-        column42.setText(String.valueOf(board[3][1]));
-        column43.setText(String.valueOf(board[3][2]));
-        column44.setText(String.valueOf(board[3][3]));
+        if (board[0][0] != 0) column11.setText(String.valueOf(board[0][0]));
+        if (board[0][1] != 0) column12.setText(String.valueOf(board[0][1]));
+        if (board[0][2] != 0) column13.setText(String.valueOf(board[0][2]));
+        if (board[0][3] != 0) column14.setText(String.valueOf(board[0][3]));
+        if (board[1][0] != 0) column21.setText(String.valueOf(board[1][0]));
+        if (board[1][1] != 0) column22.setText(String.valueOf(board[1][1]));
+        if (board[1][2] != 0) column23.setText(String.valueOf(board[1][2]));
+        if (board[1][3] != 0) column24.setText(String.valueOf(board[1][3]));
+        if (board[2][0] != 0) column31.setText(String.valueOf(board[2][0]));
+        if (board[2][1] != 0) column32.setText(String.valueOf(board[2][1]));
+        if (board[2][2] != 0) column33.setText(String.valueOf(board[2][2]));
+        if (board[2][3] != 0) column34.setText(String.valueOf(board[2][3]));
+        if (board[3][0] != 0) column41.setText(String.valueOf(board[3][0]));
+        if (board[3][1] != 0) column42.setText(String.valueOf(board[3][1]));
+        if (board[3][2] != 0) column43.setText(String.valueOf(board[3][2]));
+        if (board[3][3] != 0) column44.setText(String.valueOf(board[3][3]));
     }
 
     private void generateNewNumbers(int amount) {
