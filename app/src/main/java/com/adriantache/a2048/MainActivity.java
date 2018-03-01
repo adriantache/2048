@@ -144,35 +144,29 @@ public class MainActivity extends AppCompatActivity {
     public void btnDown(View v) {
         boolean boardMoved = false;
 
-        //create a new matrix to temporarily store values
-        //int[][] boardCopy = new int[4][4];
-
         //check for duplicates to sum up
         for (int j = 0; j < 4; j++) {
             for (int i = 3; i >= 0; i--) {
                 //boolean changed = false;
 
-                //change the numbers if they match
+                //merge the numbers if they match
                 if (board[i][j] != 0 && i > 0) {
                     for (int k = i - 1; k >= 0; k--) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
                             board[i][j] = temp;
                             board[k][j] = 0;
-                            //boardCopy[k][j] = temp;
                             boardMoved = true;
-                            //changed = true;
                             break;
-                        } else if (board[k][j] != 0) break;
+                        } else if (board[k][j] != 0) {
+                            break;
+                        }
                     }
                 }
-
-                //if we haven't changed anything, go ahead and copy the value to boardCopy
-                //if (!changed) boardCopy[i][j] = board[i][j];
             }
         }
 
-        //better system to remove blank spaces between cells
+        //remove blank spaces between cells
         for (int j = 0; j < 4; j++) {
             int counter = 3;
 
@@ -198,15 +192,6 @@ public class MainActivity extends AppCompatActivity {
             //reset flag to determine game loss possibility
             cannotMoveDown = false;
 
-            //copy all values back to main board
-//            for (int i = 0; i < 4; i++) {
-//                for (int j = 0; j < 4; j++) {
-//                    board[i][j] = boardCopy[i][j];
-//                }
-//                //todo replace with arraycopy when everything works fine
-//                //System.arraycopy(boardCopy,0, board, 0, 4);
-//            }
-
             //add one more number
             generateNewNumbers(1);
 
@@ -217,7 +202,62 @@ public class MainActivity extends AppCompatActivity {
 
     //react to button up
     public void btnUp(View v) {
+        boolean boardMoved = false;
 
+        //check for duplicates to sum up
+        for (int j = 0; j < 4; j++) {
+            for (int i = 0; i < 4; i++) {
+                //boolean changed = false;
+
+                //merge the numbers if they match
+                if (board[i][j] != 0 && i < 3) {
+                    for (int k = i + 1; k <4; k++) {
+                        if (board[k][j] == board[i][j]) {
+                            int temp = board[i][j] * 2;
+                            board[i][j] = temp;
+                            board[k][j] = 0;
+                            boardMoved = true;
+                            break;
+                        } else if (board[k][j] != 0) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //remove blank spaces between cells
+        for (int j = 0; j < 4; j++) {
+            int counter = 0;
+
+            for (int i = 0; i < 4; i++) {
+                if (board[i][j] != 0) {
+                    board[counter][j] = board[i][j];
+                    if (counter != i) {
+                        boardMoved = true;
+                        board[i][j] = 0;
+                    }
+                    counter++;
+                }
+            }
+        }
+
+        //test if board actually "moved"
+        if (!boardMoved) {
+            //set flag to determine game loss possibility
+            cannotMoveUp = true;
+            //test for game loss
+            gameLoss();
+        } else {
+            //reset flag to determine game loss possibility
+            cannotMoveUp = false;
+
+            //add one more number
+            generateNewNumbers(1);
+
+            //update display
+            updateScores();
+        }
     }
 
     //react to button left
