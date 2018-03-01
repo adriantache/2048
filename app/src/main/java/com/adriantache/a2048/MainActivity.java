@@ -9,7 +9,6 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     //define game display TextViews
     TextView column11;
     TextView column12;
@@ -27,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
     TextView column42;
     TextView column43;
     TextView column44;
+
     //define board matrix
     int[][] board = new int[4][4];
-    //mark board full if appropriate
-    boolean boardFull = false;
-    //triggers to determine board is stuck
+
+    //triggers to determine board is stuck => gameLoss()
     boolean cannotMoveDown = false;
     boolean cannotMoveUp = false;
     boolean cannotMoveRight = false;
@@ -67,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         updateScores();
     }
 
+    //todo set text size based on value
     //set all scores based on the board values
     private void updateScores() {
         //set all values first to ensure values that change to zero are reset
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //detect if the board is full in order to prevent overwriting
+    @org.jetbrains.annotations.Contract(pure = true)
     private boolean detectFullBoard() {
         boolean fullBoard = true;
 
@@ -137,14 +138,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //detect if board is full and game is over
-        //todo decide if this is necessary
-        if (fullBoard) gameLoss();
-
         return fullBoard;
     }
 
-    //react to button down (starting with this since it's the simplest case)
+    //react to button down
     public void btnDown(View v) {
         boolean boardMoved = false;
 
@@ -376,11 +373,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //todo disable or replace buttons
+    //detect if game is lost
     private void gameLoss() {
         if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
             TextView score = findViewById(R.id.score);
             score.setText("Game Over");
         }
     }
+
+    //todo implement scoring system
+
+    //todo implement reset function
+
+    //todo implement swiping gestures
 
 }

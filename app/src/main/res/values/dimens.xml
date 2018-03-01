@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="numberTextSize">24sp</dimen>
+    <dimen name="numberTextSize">32sp</dimen>
     <dimen name="minSizeTextBoxes">50dp</dimen>
+    <dimen name="buttonTextSize">24sp</dimen>
 </resources>
