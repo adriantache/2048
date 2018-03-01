@@ -137,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        //detect if board is full and game is over
+        //todo decide if this is necessary
+        if (fullBoard) gameLoss();
+
         return fullBoard;
     }
 
@@ -316,7 +320,60 @@ public class MainActivity extends AppCompatActivity {
 
     //react to button right
     public void btnRight(View v) {
+        boolean boardMoved = false;
 
+        //check for duplicates to sum up
+        for (int i = 0; i < 4; i++) {
+            for (int j = 3; j >= 0; j--) {
+                //merge the numbers if they match
+                if (board[i][j] != 0 && j > 0) {
+                    for (int k = j - 1; k >= 0; k--) {
+                        if (board[i][k] == board[i][j]) {
+                            int temp = board[i][j] * 2;
+                            board[i][j] = temp;
+                            board[i][k] = 0;
+                            boardMoved = true;
+                            break;
+                        } else if (board[i][k] != 0) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //remove blank spaces between cells
+        for (int i = 0; i < 4; i++) {
+            int counter = 3;
+
+            for (int j = 3; j >= 0; j--) {
+                if (board[i][j] != 0) {
+                    board[i][counter] = board[i][j];
+                    if (counter != j) {
+                        boardMoved = true;
+                        board[i][j] = 0;
+                    }
+                    counter--;
+                }
+            }
+        }
+
+        //test if board actually "moved"
+        if (!boardMoved) {
+            //set flag to determine game loss possibility
+            cannotMoveRight = true;
+            //test for game loss
+            gameLoss();
+        } else {
+            //reset flag to determine game loss possibility
+            cannotMoveRight = false;
+
+            //add one more number
+            generateNewNumbers(1);
+
+            //update display
+            updateScores();
+        }
     }
 
     private void gameLoss() {
