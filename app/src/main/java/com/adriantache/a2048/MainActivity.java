@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         updateScores();
     }
 
-    //todo set text size based on value
     //set all scores based on the board values
     private void updateScores() {
         //set all values first to ensure values that change to zero are reset
@@ -202,8 +201,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+        //call for text resize here, since we already know which view it applies to
+        resizeText(view, value.length());
+    }
+
+    //set text size based on length of the number
+    private void resizeText(TextView view, int length){
         //modify text value to make sure values fit
-        switch (value.length()) {
+        switch (length) {
             case 1:
                 view.setTextSize(32);
                 break;
