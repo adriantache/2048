@@ -154,13 +154,15 @@ public class MainActivity extends AppCompatActivity {
 
     //add coloured backgrounds to text based on value
     private void colorizeText(TextView view) {
-        int val = Integer.valueOf(view.getText().toString());
+        String value = view.getText().toString();
+        int val = Integer.valueOf(value);
         int pow = 0;
         while (val > 1) {
             val /= 2;
             pow++;
         }
 
+        //apply color filter based on power of 2
         switch (pow) {
             case 1:
                 view.getBackground().setColorFilter(Color.parseColor("#80DEEA"), PorterDuff.Mode.ADD);
@@ -193,10 +195,32 @@ public class MainActivity extends AppCompatActivity {
                 view.getBackground().setColorFilter(Color.parseColor("#009688"), PorterDuff.Mode.ADD);
                 break;
             case 11:
-                view.getBackground().setColorFilter(Color.parseColor("#00897B"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#F4511E"), PorterDuff.Mode.ADD);
                 break;
             default:
                 view.getBackground().setColorFilter(Color.parseColor("#FDD835"), PorterDuff.Mode.ADD);
+                break;
+        }
+
+        //modify text value to make sure values fit
+        switch (value.length()) {
+            case 1:
+                view.setTextSize(32);
+                break;
+            case 2:
+                view.setTextSize(32);
+                break;
+            case 3:
+                view.setTextSize(32);
+                break;
+            case 4:
+                view.setTextSize(24);
+                break;
+            case 5:
+                view.setTextSize(20);
+                break;
+            default:
+                view.setTextSize(18);
                 break;
         }
     }
@@ -492,10 +516,8 @@ public class MainActivity extends AppCompatActivity {
 
     //detect if game is won
     private void gameWon() {
-        if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
-            String result = "Game Won\nScore: " + score;
-            scoreTV.setText(result);
-        }
+        String result = "Game Won\nScore: " + score;
+        scoreTV.setText(result);
     }
 
     //display score
@@ -503,8 +525,6 @@ public class MainActivity extends AppCompatActivity {
         String result = "Score: " + score;
         scoreTV.setText(result);
     }
-
-    //todo implement color coding for numbers
 
     //todo implement reset function
 
