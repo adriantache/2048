@@ -121,9 +121,10 @@ public class MainActivity extends AppCompatActivity {
             int column = random.nextInt(4);
 
             if (board[row][column] == 0) {
-                int number = random.nextInt(2);
-                number += 1;
-                number *= 2;
+                int number = random.nextInt(10);
+                //giving a 10% chance to spawn the number 4
+                if (number == 9) number = 4;
+                else number = 2;
 
                 board[row][column] = number;
                 amount--;
