@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    //define game display TextViews
+    //define TextViews
     TextView column11;
     TextView column12;
     TextView column13;
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView column42;
     TextView column43;
     TextView column44;
+    TextView scoreTV;
 
     //define board matrix
     int[][] board = new int[4][4];
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     boolean cannotMoveUp = false;
     boolean cannotMoveRight = false;
     boolean cannotMoveLeft = false;
+
+    //variable for storing score
+    int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         column42 = findViewById(R.id.column42);
         column43 = findViewById(R.id.column43);
         column44 = findViewById(R.id.column44);
+        scoreTV = findViewById(R.id.score);
 
         //spawn first two values
         generateNewNumbers(2);
@@ -153,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = i - 1; k >= 0; k--) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
+                            score+=temp;
+                            updateScore();
                             board[i][j] = temp;
                             board[k][j] = 0;
                             boardMoved = true;
@@ -211,6 +218,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = i + 1; k < 4; k++) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
+                            score+=temp;
+                            updateScore();
                             board[i][j] = temp;
                             board[k][j] = 0;
                             boardMoved = true;
@@ -269,6 +278,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = j + 1; k < 4; k++) {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
+                            score+=temp;
+                            updateScore();
                             board[i][j] = temp;
                             board[i][k] = 0;
                             boardMoved = true;
@@ -327,6 +338,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = j - 1; k >= 0; k--) {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
+                            score+=temp;
+                            updateScore();
                             board[i][j] = temp;
                             board[i][k] = 0;
                             boardMoved = true;
@@ -377,12 +390,16 @@ public class MainActivity extends AppCompatActivity {
     //detect if game is lost
     private void gameLoss() {
         if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
-            TextView score = findViewById(R.id.score);
-            score.setText("Game Over");
+            String result = "Game Over\nScore: "+score;
+            scoreTV.setText(result);
         }
     }
 
-    //todo implement scoring system
+    //display score
+    private void updateScore(){
+        String result = "Score: "+score;
+        scoreTV.setText(result);
+    }
 
     //todo implement reset function
 
