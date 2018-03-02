@@ -3,4 +3,5 @@
     <dimen name="numberTextSize">32sp</dimen>
     <dimen name="minSizeTextBoxes">50dp</dimen>
     <dimen name="buttonTextSize">24sp</dimen>
+    <dimen name="buttonHeight">75dp</dimen>
 </resources>
