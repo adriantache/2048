@@ -388,4 +388,8 @@ public class MainActivity extends AppCompatActivity {
 
     //todo implement swiping gestures
 
+    //todo highlight added number
+
+    //todo implement color highlighting system
+
 }
