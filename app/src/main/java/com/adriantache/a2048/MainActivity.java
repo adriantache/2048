@@ -1,5 +1,7 @@
 package com.adriantache.a2048;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -92,23 +94,111 @@ public class MainActivity extends AppCompatActivity {
         column43.setText(String.valueOf(board[3][2]));
         column44.setText(String.valueOf(board[3][3]));
 
-        //then remove any zeroes
+        //reset all colors
+        resetColorFilters();
+
+        //then remove any zeroes and apply coloring
         if (column11.getText().equals("0")) column11.setText(null);
+        else colorizeText(column11);
         if (column12.getText().equals("0")) column12.setText(null);
+        else colorizeText(column12);
         if (column13.getText().equals("0")) column13.setText(null);
+        else colorizeText(column13);
         if (column14.getText().equals("0")) column14.setText(null);
+        else colorizeText(column14);
         if (column21.getText().equals("0")) column21.setText(null);
+        else colorizeText(column21);
         if (column22.getText().equals("0")) column22.setText(null);
+        else colorizeText(column22);
         if (column23.getText().equals("0")) column23.setText(null);
+        else colorizeText(column23);
         if (column24.getText().equals("0")) column24.setText(null);
+        else colorizeText(column24);
         if (column31.getText().equals("0")) column31.setText(null);
+        else colorizeText(column31);
         if (column32.getText().equals("0")) column32.setText(null);
+        else colorizeText(column32);
         if (column33.getText().equals("0")) column33.setText(null);
+        else colorizeText(column33);
         if (column34.getText().equals("0")) column34.setText(null);
+        else colorizeText(column34);
         if (column41.getText().equals("0")) column41.setText(null);
+        else colorizeText(column41);
         if (column42.getText().equals("0")) column42.setText(null);
+        else colorizeText(column42);
         if (column43.getText().equals("0")) column43.setText(null);
+        else colorizeText(column43);
         if (column44.getText().equals("0")) column44.setText(null);
+        else colorizeText(column44);
+    }
+
+    //remove all color filters
+    private void resetColorFilters() {
+        column11.getBackground().setColorFilter(null);
+        column12.getBackground().setColorFilter(null);
+        column13.getBackground().setColorFilter(null);
+        column14.getBackground().setColorFilter(null);
+        column21.getBackground().setColorFilter(null);
+        column22.getBackground().setColorFilter(null);
+        column23.getBackground().setColorFilter(null);
+        column24.getBackground().setColorFilter(null);
+        column31.getBackground().setColorFilter(null);
+        column32.getBackground().setColorFilter(null);
+        column33.getBackground().setColorFilter(null);
+        column34.getBackground().setColorFilter(null);
+        column41.getBackground().setColorFilter(null);
+        column42.getBackground().setColorFilter(null);
+        column43.getBackground().setColorFilter(null);
+        column44.getBackground().setColorFilter(null);
+    }
+
+    //add coloured backgrounds to text based on value
+    private void colorizeText(TextView view) {
+        int val = Integer.valueOf(view.getText().toString());
+        int pow = 0;
+        while (val > 1) {
+            val /= 2;
+            pow++;
+        }
+
+        switch (pow) {
+            case 1:
+                view.getBackground().setColorFilter(Color.parseColor("#80DEEA"), PorterDuff.Mode.ADD);
+                break;
+            case 2:
+                view.getBackground().setColorFilter(Color.parseColor("#4DD0E1"), PorterDuff.Mode.ADD);
+                break;
+            case 3:
+                view.getBackground().setColorFilter(Color.parseColor("#26C6DA"), PorterDuff.Mode.ADD);
+                break;
+            case 4:
+                view.getBackground().setColorFilter(Color.parseColor("#00BCD4"), PorterDuff.Mode.ADD);
+                break;
+            case 5:
+                view.getBackground().setColorFilter(Color.parseColor("#00ACC1"), PorterDuff.Mode.ADD);
+                break;
+            case 6:
+                view.getBackground().setColorFilter(Color.parseColor("#0097A7"), PorterDuff.Mode.ADD);
+                break;
+            case 7:
+                view.getBackground().setColorFilter(Color.parseColor("#80CBC4"), PorterDuff.Mode.ADD);
+                break;
+            case 8:
+                view.getBackground().setColorFilter(Color.parseColor("#4DB6AC"), PorterDuff.Mode.ADD);
+                break;
+            case 9:
+                view.getBackground().setColorFilter(Color.parseColor("#26A69A"), PorterDuff.Mode.ADD);
+                break;
+            case 10:
+                view.getBackground().setColorFilter(Color.parseColor("#009688"), PorterDuff.Mode.ADD);
+                break;
+            case 11:
+                view.getBackground().setColorFilter(Color.parseColor("#00897B"), PorterDuff.Mode.ADD);
+                break;
+            default:
+                view.getBackground().setColorFilter(Color.parseColor("#FDD835"), PorterDuff.Mode.ADD);
+                break;
+        }
     }
 
     //generate the next number in order to continue the game
@@ -159,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = i - 1; k >= 0; k--) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            score+=temp;
+                            score += temp;
                             updateScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -220,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = i + 1; k < 4; k++) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            score+=temp;
+                            score += temp;
                             updateScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -281,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = j + 1; k < 4; k++) {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            score+=temp;
+                            score += temp;
                             updateScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -342,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = j - 1; k >= 0; k--) {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            score+=temp;
+                            score += temp;
                             updateScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -395,7 +485,7 @@ public class MainActivity extends AppCompatActivity {
     //detect if game is lost
     private void gameLoss() {
         if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
-            String result = "Game Over\nScore: "+score;
+            String result = "Game Over\nScore: " + score;
             scoreTV.setText(result);
         }
     }
@@ -403,14 +493,14 @@ public class MainActivity extends AppCompatActivity {
     //detect if game is won
     private void gameWon() {
         if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
-            String result = "Game Won\nScore: "+score;
+            String result = "Game Won\nScore: " + score;
             scoreTV.setText(result);
         }
     }
 
     //display score
-    private void updateScore(){
-        String result = "Score: "+score;
+    private void updateScore() {
+        String result = "Score: " + score;
         scoreTV.setText(result);
     }
 
