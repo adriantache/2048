@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                             int temp = board[i][j] * 2;
                             score+=temp;
                             updateScore();
+                            if (temp == 2048) gameWon();
                             board[i][j] = temp;
                             board[k][j] = 0;
                             boardMoved = true;
@@ -220,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                             int temp = board[i][j] * 2;
                             score+=temp;
                             updateScore();
+                            if (temp == 2048) gameWon();
                             board[i][j] = temp;
                             board[k][j] = 0;
                             boardMoved = true;
@@ -280,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
                             int temp = board[i][j] * 2;
                             score+=temp;
                             updateScore();
+                            if (temp == 2048) gameWon();
                             board[i][j] = temp;
                             board[i][k] = 0;
                             boardMoved = true;
@@ -340,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
                             int temp = board[i][j] * 2;
                             score+=temp;
                             updateScore();
+                            if (temp == 2048) gameWon();
                             board[i][j] = temp;
                             board[i][k] = 0;
                             boardMoved = true;
@@ -395,11 +399,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //detect if game is won
+    private void gameWon() {
+        if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
+            String result = "Game Won\nScore: "+score;
+            scoreTV.setText(result);
+        }
+    }
+
     //display score
     private void updateScore(){
         String result = "Score: "+score;
         scoreTV.setText(result);
     }
+
+    //todo implement color coding for numbers
 
     //todo implement reset function
 
