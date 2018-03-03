@@ -4,9 +4,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -89,26 +87,18 @@ public class MainActivity extends AppCompatActivity {
 
     //capture touches https://developer.android.com/training/gestures/movement.html
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         this.mDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-        private static final String DEBUG_TAG = "Gestures";
-
-        @Override
-        public boolean onDown(MotionEvent event) {
-            Log.d(DEBUG_TAG,"onDown: " + event.toString());
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2,
-                               float velocityX, float velocityY) {
-            Log.d(DEBUG_TAG, "onFling: " + event1.toString() + event2.toString());
-            Log.d(DEBUG_TAG, "onFling: " + velocityX +" "+ velocityY);
-            return true;
+    private void interpretTouch(float velocityX, float velocityY) {
+        if (Math.abs(velocityX) > Math.abs(velocityY) && Math.abs(velocityX)>100) {
+            if(velocityX>0) btnRight(blank);
+            else btnLeft(blank);
+        } else if (Math.abs(velocityY)>100){
+            if(velocityY<0) btnUp(blank);
+            else btnDown(blank);
         }
     }
 
@@ -245,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //set text size based on length of the number
-    private void resizeText(TextView view, int length){
+    private void resizeText(TextView view, int length) {
         //modify text value to make sure values fit
         switch (length) {
             case 1:
@@ -568,6 +558,15 @@ public class MainActivity extends AppCompatActivity {
     private void updateScore() {
         String result = "Score: " + score;
         scoreTV.setText(result);
+    }
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+            interpretTouch(velocityX, velocityY);
+            return true;
+        }
     }
 
     //todo implement reset function
