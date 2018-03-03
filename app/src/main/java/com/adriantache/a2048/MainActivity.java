@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     TextView column43;
     TextView column44;
     TextView scoreTV;
+    TextView resetTV;
 
     //placeholder
     TextView blank;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         column43 = findViewById(R.id.column43);
         column44 = findViewById(R.id.column44);
         scoreTV = findViewById(R.id.score);
+        resetTV = findViewById(R.id.reset);
 
         //spawn first two values
         generateNewNumbers(2);
@@ -308,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
                             score += temp;
-                            updateScore();
+                            updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
                             board[k][j] = 0;
@@ -369,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
                             score += temp;
-                            updateScore();
+                            updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
                             board[k][j] = 0;
@@ -430,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
                             score += temp;
-                            updateScore();
+                            updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
                             board[i][k] = 0;
@@ -491,7 +493,7 @@ public class MainActivity extends AppCompatActivity {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
                             score += temp;
-                            updateScore();
+                            updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
                             board[i][k] = 0;
@@ -545,6 +547,7 @@ public class MainActivity extends AppCompatActivity {
         if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
             String result = "Game Over\nScore: " + score;
             scoreTV.setText(result);
+            resetTV.setVisibility(View.VISIBLE);
         }
     }
 
@@ -552,12 +555,40 @@ public class MainActivity extends AppCompatActivity {
     private void gameWon() {
         String result = "Game Won\nScore: " + score;
         scoreTV.setText(result);
+        resetTV.setVisibility(View.VISIBLE);
     }
 
     //display score
-    private void updateScore() {
+    private void updateTotalScore() {
         String result = "Score: " + score;
         scoreTV.setText(result);
+    }
+
+    //reset game
+    public void reset(View view){
+        //define board matrix
+        board = new int[4][4];
+
+        //triggers to determine board is stuck => gameLoss()
+        cannotMoveDown = false;
+        cannotMoveUp = false;
+        cannotMoveRight = false;
+        cannotMoveLeft = false;
+
+        //variable for storing score
+        score = 0;
+
+        //spawn first two values
+        generateNewNumbers(2);
+
+        //display the board for a new game
+        updateScores();
+        
+        //reset score display
+        updateTotalScore();
+
+        //hide the reset button
+        resetTV.setVisibility(View.INVISIBLE);
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -569,12 +600,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //todo implement reset function
-
-    //todo implement swiping gestures
-
     //todo highlight added number
 
-    //todo implement color highlighting system
-
+    //todo fix false game over prompt when quickly pressing buttons (previous movement stays "stuck" to cannot move
 }
