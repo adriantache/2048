@@ -9,6 +9,6 @@ After most features were done I also had a look at the [Coding Train 2048 videos
 were implemented more cleverly in my code. I've still got a few features to flesh out and I'm sure I can still improve
 parts of the app that are already there.
 
-*Please try out the app and report any bugs.*
+**Please try out the app and report any bugs.**
 
-*Screenshots:* _[pending]_
+**Screenshots:** _[pending]_
