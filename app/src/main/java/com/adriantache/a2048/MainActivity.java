@@ -193,40 +193,40 @@ public class MainActivity extends AppCompatActivity {
         //apply color filter based on power of 2
         switch (pow) {
             case 1:
-                view.getBackground().setColorFilter(Color.parseColor("#80DEEA"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.ADD);
                 break;
             case 2:
-                view.getBackground().setColorFilter(Color.parseColor("#4DD0E1"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#7E57C2"), PorterDuff.Mode.ADD);
                 break;
             case 3:
                 view.getBackground().setColorFilter(Color.parseColor("#26C6DA"), PorterDuff.Mode.ADD);
                 break;
             case 4:
-                view.getBackground().setColorFilter(Color.parseColor("#00BCD4"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#EC407A"), PorterDuff.Mode.ADD);
                 break;
             case 5:
-                view.getBackground().setColorFilter(Color.parseColor("#00ACC1"), PorterDuff.Mode.ADD);
-                break;
-            case 6:
-                view.getBackground().setColorFilter(Color.parseColor("#0097A7"), PorterDuff.Mode.ADD);
-                break;
-            case 7:
-                view.getBackground().setColorFilter(Color.parseColor("#80CBC4"), PorterDuff.Mode.ADD);
-                break;
-            case 8:
-                view.getBackground().setColorFilter(Color.parseColor("#4DB6AC"), PorterDuff.Mode.ADD);
-                break;
-            case 9:
                 view.getBackground().setColorFilter(Color.parseColor("#26A69A"), PorterDuff.Mode.ADD);
                 break;
+            case 6:
+                view.getBackground().setColorFilter(Color.parseColor("#D4E157"), PorterDuff.Mode.ADD);
+                break;
+            case 7:
+                view.getBackground().setColorFilter(Color.parseColor("#FFCA28"), PorterDuff.Mode.ADD);
+                break;
+            case 8:
+                view.getBackground().setColorFilter(Color.parseColor("#FFA726"), PorterDuff.Mode.ADD);
+                break;
+            case 9:
+                view.getBackground().setColorFilter(Color.parseColor("#8D6E63"), PorterDuff.Mode.ADD);
+                break;
             case 10:
-                view.getBackground().setColorFilter(Color.parseColor("#009688"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#66BB6A"), PorterDuff.Mode.ADD);
                 break;
             case 11:
-                view.getBackground().setColorFilter(Color.parseColor("#F4511E"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#FF7043"), PorterDuff.Mode.ADD);
                 break;
             default:
-                view.getBackground().setColorFilter(Color.parseColor("#FDD835"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#607D8B"), PorterDuff.Mode.ADD);
                 break;
         }
 

@@ -333,10 +333,10 @@
         android:onClick="btnLeft"
         android:text="@string/left"
         android:textSize="@dimen/buttonTextSize"
-        app:layout_constraintBottom_toTopOf="@+id/btnDown"
+        app:layout_constraintBottom_toBottomOf="@+id/btnUp"
         app:layout_constraintEnd_toStartOf="@+id/btnUp"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/btnDown" />
+        app:layout_constraintTop_toBottomOf="@+id/btnUp" />
 
     <Button
         android:id="@+id/btnRight"
@@ -348,7 +348,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnUp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toEndOf="@+id/btnUp"
-        app:layout_constraintTop_toTopOf="@+id/btnDown" />
+        app:layout_constraintTop_toBottomOf="@+id/btnUp" />
 
     <Button
         android:id="@+id/btnDown"
