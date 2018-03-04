@@ -49,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
     //variable for storing score
     int score = 0;
 
+    //detect first move for highlighting
+    boolean firstMove = true;
+
+    //define row and column for adding a new number globally, so we can access them for highlighting
+    int row;
+    int column;
+
     //set up touch gestures
     private GestureDetectorCompat mDetector;
 
@@ -95,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void interpretTouch(float velocityX, float velocityY) {
-        if (Math.abs(velocityX) > Math.abs(velocityY) && Math.abs(velocityX)>100) {
-            if(velocityX>0) btnRight(blank);
+        if (Math.abs(velocityX) > Math.abs(velocityY) && Math.abs(velocityX) > 100) {
+            if (velocityX > 0) btnRight(blank);
             else btnLeft(blank);
-        } else if (Math.abs(velocityY)>100){
-            if(velocityY<0) btnUp(blank);
+        } else if (Math.abs(velocityY) > 100) {
+            if (velocityY < 0) btnUp(blank);
             else btnDown(blank);
         }
     }
@@ -160,6 +167,46 @@ public class MainActivity extends AppCompatActivity {
         else colorizeText(column43);
         if (column44.getText().equals("0")) column44.setText(null);
         else colorizeText(column44);
+
+        //todo play with porter duff modes to figure out something nicer
+        //apply highlighting based on which number was last added
+        if (firstMove) firstMove = false;
+        else {
+            if (row >= 0 && row < 4 && column >= 0 && column < 4) {
+                if (row == 0 && column == 0)
+                    column11.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 0 && column == 1)
+                    column12.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 0 && column == 2)
+                    column13.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 0 && column == 3)
+                    column14.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 1 && column == 0)
+                    column21.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 1 && column == 1)
+                    column22.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 1 && column == 2)
+                    column23.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 1 && column == 3)
+                    column24.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 2 && column == 0)
+                    column31.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 2 && column == 1)
+                    column32.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 2 && column == 2)
+                    column33.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 2 && column == 3)
+                    column34.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 3 && column == 0)
+                    column41.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 3 && column == 1)
+                    column42.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 3 && column == 2)
+                    column43.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                if (row == 3 && column == 3)
+                    column44.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+            }
+        }
     }
 
     //remove all color filters
@@ -196,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
         switch (pow) {
             case 1:
                 view.getBackground().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.ADD);
+//                view.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
                 break;
             case 2:
                 view.getBackground().setColorFilter(Color.parseColor("#7E57C2"), PorterDuff.Mode.ADD);
@@ -232,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+
         //call for text resize here, since we already know which view it applies to
         resizeText(view, value.length());
     }
@@ -267,8 +316,8 @@ public class MainActivity extends AppCompatActivity {
 
         while (amount > 0 && !detectFullBoard()) {
 
-            int row = random.nextInt(4);
-            int column = random.nextInt(4);
+            row = random.nextInt(4);
+            column = random.nextInt(4);
 
             if (board[row][column] == 0) {
                 int number = random.nextInt(10);
@@ -541,7 +590,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //todo disable or replace buttons
     //todo implement coding train solution (detect no duplicates next to each other on row or column)
     //detect if game is lost
     private void gameLoss() {
@@ -566,7 +614,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //reset game
-    public void reset(View view){
+    public void reset(View view) {
         //define board matrix
         board = new int[4][4];
 
@@ -584,12 +632,15 @@ public class MainActivity extends AppCompatActivity {
 
         //display the board for a new game
         updateScores();
-        
+
         //reset score display
         updateTotalScore();
 
         //hide the reset button
         resetTV.setVisibility(View.INVISIBLE);
+
+        //detect first move for highlighting
+        boolean firstMove = true;
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -601,7 +652,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //todo highlight added number
-
-    //todo fix false game over prompt when quickly pressing buttons (previous movement stays "stuck" to cannot move
 }
