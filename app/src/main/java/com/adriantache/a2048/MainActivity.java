@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 view.getBackground().setColorFilter(Color.parseColor("#7E57C2"), PorterDuff.Mode.ADD);
                 break;
             case 3:
-                view.getBackground().setColorFilter(Color.parseColor("#26C6DA"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#ef5350"), PorterDuff.Mode.ADD);
                 break;
             case 4:
                 view.getBackground().setColorFilter(Color.parseColor("#EC407A"), PorterDuff.Mode.ADD);
@@ -219,13 +219,13 @@ public class MainActivity extends AppCompatActivity {
                 view.getBackground().setColorFilter(Color.parseColor("#FFA726"), PorterDuff.Mode.ADD);
                 break;
             case 9:
-                view.getBackground().setColorFilter(Color.parseColor("#8D6E63"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#E91E63"), PorterDuff.Mode.ADD);
                 break;
             case 10:
                 view.getBackground().setColorFilter(Color.parseColor("#66BB6A"), PorterDuff.Mode.ADD);
                 break;
             case 11:
-                view.getBackground().setColorFilter(Color.parseColor("#FF7043"), PorterDuff.Mode.ADD);
+                view.getBackground().setColorFilter(Color.parseColor("#FFEB3B"), PorterDuff.Mode.ADD);
                 break;
             default:
                 view.getBackground().setColorFilter(Color.parseColor("#607D8B"), PorterDuff.Mode.ADD);
