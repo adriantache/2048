@@ -40,12 +40,6 @@ public class MainActivity extends AppCompatActivity {
     //define board matrix
     int[][] board = new int[4][4];
 
-    //triggers to determine board is stuck => gameLoss()
-    boolean cannotMoveDown = false;
-    boolean cannotMoveUp = false;
-    boolean cannotMoveRight = false;
-    boolean cannotMoveLeft = false;
-
     //variable for storing score
     int score = 0;
 
@@ -174,37 +168,37 @@ public class MainActivity extends AppCompatActivity {
         else {
             if (row >= 0 && row < 4 && column >= 0 && column < 4) {
                 if (row == 0 && column == 0)
-                    column11.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column11.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 0 && column == 1)
-                    column12.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column12.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 0 && column == 2)
-                    column13.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column13.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 0 && column == 3)
-                    column14.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column14.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 1 && column == 0)
-                    column21.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column21.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 1 && column == 1)
-                    column22.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column22.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 1 && column == 2)
-                    column23.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column23.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 1 && column == 3)
-                    column24.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column24.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 2 && column == 0)
-                    column31.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column31.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 2 && column == 1)
-                    column32.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column32.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 2 && column == 2)
-                    column33.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column33.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 2 && column == 3)
-                    column34.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column34.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 3 && column == 0)
-                    column41.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column41.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 3 && column == 1)
-                    column42.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column42.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 3 && column == 2)
-                    column43.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column43.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
                 if (row == 3 && column == 3)
-                    column44.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
+                    column44.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
             }
         }
     }
@@ -344,6 +338,19 @@ public class MainActivity extends AppCompatActivity {
         return fullBoard;
     }
 
+    //detect if all adjacent numbers are unique
+    private boolean detectImpasse(){
+        if (!detectFullBoard()) return false;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == board[i+1][j] || board[i][j] == board[i][j+1]) return false;
+            }
+        }
+
+        return true;
+    }
+
     //react to button down
     public void btnDown(View v) {
         boolean boardMoved = false;
@@ -389,14 +396,9 @@ public class MainActivity extends AppCompatActivity {
 
         //test if board actually "moved"
         if (!boardMoved) {
-            //set flag to determine game loss possibility
-            cannotMoveDown = true;
             //test for game loss
             gameLoss();
         } else {
-            //reset flag to determine game loss possibility
-            cannotMoveDown = false;
-
             //add one more number
             generateNewNumbers(1);
 
@@ -450,14 +452,9 @@ public class MainActivity extends AppCompatActivity {
 
         //test if board actually "moved"
         if (!boardMoved) {
-            //set flag to determine game loss possibility
-            cannotMoveUp = true;
             //test for game loss
             gameLoss();
         } else {
-            //reset flag to determine game loss possibility
-            cannotMoveUp = false;
-
             //add one more number
             generateNewNumbers(1);
 
@@ -511,14 +508,9 @@ public class MainActivity extends AppCompatActivity {
 
         //test if board actually "moved"
         if (!boardMoved) {
-            //set flag to determine game loss possibility
-            cannotMoveLeft = true;
             //test for game loss
             gameLoss();
         } else {
-            //reset flag to determine game loss possibility
-            cannotMoveLeft = false;
-
             //add one more number
             generateNewNumbers(1);
 
@@ -572,14 +564,9 @@ public class MainActivity extends AppCompatActivity {
 
         //test if board actually "moved"
         if (!boardMoved) {
-            //set flag to determine game loss possibility
-            cannotMoveRight = true;
             //test for game loss
             gameLoss();
         } else {
-            //reset flag to determine game loss possibility
-            cannotMoveRight = false;
-
             //add one more number
             generateNewNumbers(1);
 
@@ -588,10 +575,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //todo implement coding train solution (detect no duplicates next to each other on row or column)
     //detect if game is lost
     private void gameLoss() {
-        if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp && detectFullBoard()) {
+        if (detectImpasse()) {
             String result = "Game Over\nScore: " + score;
             scoreTV.setText(result);
             resetTV.setVisibility(View.VISIBLE);
@@ -615,12 +601,6 @@ public class MainActivity extends AppCompatActivity {
     public void reset(View view) {
         //define board matrix
         board = new int[4][4];
-
-        //triggers to determine board is stuck => gameLoss()
-        cannotMoveDown = false;
-        cannotMoveUp = false;
-        cannotMoveRight = false;
-        cannotMoveLeft = false;
 
         //variable for storing score
         score = 0;
