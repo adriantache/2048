@@ -243,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
         switch (pow) {
             case 1:
                 view.getBackground().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.ADD);
-//                view.getBackground().setColorFilter(Color.parseColor("#ECEFF1"), PorterDuff.Mode.ADD);
                 break;
             case 2:
                 view.getBackground().setColorFilter(Color.parseColor("#7E57C2"), PorterDuff.Mode.ADD);
@@ -279,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
                 view.getBackground().setColorFilter(Color.parseColor("#607D8B"), PorterDuff.Mode.ADD);
                 break;
         }
-
 
         //call for text resize here, since we already know which view it applies to
         resizeText(view, value.length());
