@@ -542,9 +542,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //todo disable or replace buttons
+    //todo implement coding train solution (detect no duplicates next to each other on row or column)
     //detect if game is lost
     private void gameLoss() {
-        if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp) {
+        if (cannotMoveDown && cannotMoveLeft && cannotMoveRight && cannotMoveUp && detectFullBoard()) {
             String result = "Game Over\nScore: " + score;
             scoreTV.setText(result);
             resetTV.setVisibility(View.VISIBLE);
