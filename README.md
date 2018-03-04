@@ -12,4 +12,5 @@ parts of the app that are already there.
 **Please try out the app and report any bugs.**
 
 **Screenshots:** 
-![screenshot](https://github.com/adriantache/2048/blob/master/screenshot.gif)
+
+![screenshot](https://thumbs.gfycat.com/BriefDelectableIbizanhound-size_restricted.gif)
