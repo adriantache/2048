@@ -165,8 +165,7 @@ public class MainActivity extends AppCompatActivity {
         if (column44.getText().equals("0")) column44.setText(null);
         else colorizeText(column44);
 
-        //todo play with porter duff modes to figure out something nicer
-        //apply highlighting based on which number was last added
+        //apply a blink animation based on which number was last added
         if (firstMove) firstMove = false;
         else {
             if (row >= 0 && row < 4 && column >= 0 && column < 4) {
@@ -207,8 +206,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Animation getBlinkAnimation(){
-        Animation animation = new AlphaAnimation(1, 0);         // Change alpha from fully visible to invisible
-        animation.setDuration(80);                             // duration - half a second
+        Animation animation = new AlphaAnimation(1.0f, 0.5f);   // Change alpha from fully visible to invisible
+        animation.setDuration(100);                             // duration - half a second
         animation.setInterpolator(new LinearInterpolator());    // do not alter animation rate
         animation.setRepeatCount(1);                            // Repeat animation infinitely
         animation.setRepeatMode(Animation.REVERSE);             // Reverse animation at the end so the button will fade back in
@@ -642,5 +641,4 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
-
 }
