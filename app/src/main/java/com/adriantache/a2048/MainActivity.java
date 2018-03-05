@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -168,39 +171,49 @@ public class MainActivity extends AppCompatActivity {
         else {
             if (row >= 0 && row < 4 && column >= 0 && column < 4) {
                 if (row == 0 && column == 0)
-                    column11.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column11.startAnimation(getBlinkAnimation());
                 if (row == 0 && column == 1)
-                    column12.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column12.startAnimation(getBlinkAnimation());
                 if (row == 0 && column == 2)
-                    column13.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column13.startAnimation(getBlinkAnimation());
                 if (row == 0 && column == 3)
-                    column14.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column14.startAnimation(getBlinkAnimation());
                 if (row == 1 && column == 0)
-                    column21.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column21.startAnimation(getBlinkAnimation());
                 if (row == 1 && column == 1)
-                    column22.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column22.startAnimation(getBlinkAnimation());
                 if (row == 1 && column == 2)
-                    column23.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column23.startAnimation(getBlinkAnimation());
                 if (row == 1 && column == 3)
-                    column24.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column24.startAnimation(getBlinkAnimation());
                 if (row == 2 && column == 0)
-                    column31.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column31.startAnimation(getBlinkAnimation());
                 if (row == 2 && column == 1)
-                    column32.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column32.startAnimation(getBlinkAnimation());
                 if (row == 2 && column == 2)
-                    column33.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column33.startAnimation(getBlinkAnimation());
                 if (row == 2 && column == 3)
-                    column34.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column34.startAnimation(getBlinkAnimation());
                 if (row == 3 && column == 0)
-                    column41.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column41.startAnimation(getBlinkAnimation());
                 if (row == 3 && column == 1)
-                    column42.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column42.startAnimation(getBlinkAnimation());
                 if (row == 3 && column == 2)
-                    column43.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column43.startAnimation(getBlinkAnimation());
                 if (row == 3 && column == 3)
-                    column44.getBackground().setColorFilter(Color.parseColor("#AAECEFF1"), PorterDuff.Mode.ADD);
+                    column44.startAnimation(getBlinkAnimation());
             }
         }
+    }
+
+    public Animation getBlinkAnimation(){
+        Animation animation = new AlphaAnimation(1, 0);         // Change alpha from fully visible to invisible
+        animation.setDuration(80);                             // duration - half a second
+        animation.setInterpolator(new LinearInterpolator());    // do not alter animation rate
+        animation.setRepeatCount(1);                            // Repeat animation infinitely
+        animation.setRepeatMode(Animation.REVERSE);             // Reverse animation at the end so the button will fade back in
+
+        return animation;
     }
 
     //remove all color filters
@@ -618,7 +631,7 @@ public class MainActivity extends AppCompatActivity {
         resetTV.setVisibility(View.INVISIBLE);
 
         //detect first move for highlighting
-        boolean firstMove = true;
+        firstMove = true;
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
