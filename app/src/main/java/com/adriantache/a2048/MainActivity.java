@@ -356,7 +356,8 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if (board[i][j] == board[i+1][j] || board[i][j] == board[i][j+1]) return false;
+                if (i < 3) if (board[i][j] == board[i + 1][j]) return false;
+                if (j < 3) if (board[i][j] == board[i][j + 1]) return false;
             }
         }
 
