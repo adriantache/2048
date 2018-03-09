@@ -8,4 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Style for grid items -->
+    <style name="GridItems">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/border</item>
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
+        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center|center_vertical</item>
+        <item name="android:minHeight">@dimen/buttonHeight</item>
+        <item name="android:minWidth">@dimen/buttonHeight</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">@dimen/buttonTextSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
 </resources>
