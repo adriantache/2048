@@ -653,14 +653,11 @@ public class MainActivity extends AppCompatActivity {
         //get smallest board value
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if (board[i][j]==0) continue;
-
-                if (board[i][j] < smallestValue) smallestValue = board[i][j];
+                if (board[i][j] != 0 && board[i][j] < smallestValue) smallestValue = board[i][j];
             }
         }
 
         //set all smallest numbers to 2x
-        //get smallest board value
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (board[i][j] == smallestValue) board[i][j] *= 2;
@@ -674,7 +671,6 @@ public class MainActivity extends AppCompatActivity {
         updateScores();
 
         Toast.makeText(this, "You bring dishonor to this game!", Toast.LENGTH_SHORT).show();
-
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
