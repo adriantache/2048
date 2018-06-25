@@ -12,49 +12,52 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
     //define TextViews
-    TextView column11;
-    TextView column12;
-    TextView column13;
-    TextView column14;
-    TextView column21;
-    TextView column22;
-    TextView column23;
-    TextView column24;
-    TextView column31;
-    TextView column32;
-    TextView column33;
-    TextView column34;
-    TextView column41;
-    TextView column42;
-    TextView column43;
-    TextView column44;
-    TextView scoreTV;
-    TextView resetTV;
+    private TextView column11;
+    private TextView column12;
+    private TextView column13;
+    private TextView column14;
+    private TextView column21;
+    private TextView column22;
+    private TextView column23;
+    private TextView column24;
+    private TextView column31;
+    private TextView column32;
+    private TextView column33;
+    private TextView column34;
+    private TextView column41;
+    private TextView column42;
+    private TextView column43;
+    private TextView column44;
+    private TextView resetTV;
+    private TextView scoreTV;
 
     //placeholder
-    TextView blank;
+    private TextView blank;
 
     //define board matrix
-    int[][] board = new int[4][4];
+    private int[][] board = new int[4][4];
 
     //variable for storing score
-    int score = 0;
+    private int score = 0;
 
     //detect first move for highlighting
-    boolean firstMove = true;
+    private boolean firstMove = true;
 
     //define row and column for adding a new number globally, so we can access them for highlighting
-    int row;
-    int column;
+    private int row;
+    private int column;
 
     //set up touch gestures
     private GestureDetectorCompat mDetector;
+
+    //define default value of new generated numbers
+    private int newNumberValue = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Animation getBlinkAnimation(){
+    public Animation getBlinkAnimation() {
         Animation animation = new AlphaAnimation(1.0f, 0.5f);   // Change alpha from fully visible to invisible
         animation.setDuration(100);                             // duration - half a second
         animation.setInterpolator(new LinearInterpolator());    // do not alter animation rate
@@ -326,8 +329,8 @@ public class MainActivity extends AppCompatActivity {
             if (board[row][column] == 0) {
                 int number = random.nextInt(10);
                 //giving a 10% chance to spawn the number 4
-                if (number == 9) number = 4;
-                else number = 2;
+                if (number == 9) number = newNumberValue * 2;
+                else number = newNumberValue;
 
                 board[row][column] = number;
                 amount--;
@@ -339,19 +342,17 @@ public class MainActivity extends AppCompatActivity {
     //detect if the board is full in order to prevent overwriting
     @org.jetbrains.annotations.Contract(pure = true)
     private boolean detectFullBoard() {
-        boolean fullBoard = true;
-
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if (board[i][j] == 0) fullBoard = false;
+                if (board[i][j] == 0) return false;
             }
         }
 
-        return fullBoard;
+        return true;
     }
 
     //detect if all adjacent numbers are unique
-    private boolean detectImpasse(){
+    private boolean detectImpasse() {
         if (!detectFullBoard()) return false;
 
         for (int i = 0; i < 4; i++) {
@@ -632,6 +633,26 @@ public class MainActivity extends AppCompatActivity {
 
         //detect first move for highlighting
         firstMove = true;
+
+        //reset new number value
+        newNumberValue = 2;
+    }
+
+    public void cheat(View view) {
+        //set entire board to 512
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                board[i][j] = 512;
+            }
+        }
+
+        //set all generated numbers to 512
+        newNumberValue = 512;
+
+        //and update the display
+        updateScores();
+
+        Toast.makeText(this, "You filthy casual!", Toast.LENGTH_SHORT).show();
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
