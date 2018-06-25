@@ -469,4 +469,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="6dp" />
 
+    <Button
+        android:id="@+id/UPGRADE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="UPGRADE"
+        android:onClick="upgrade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

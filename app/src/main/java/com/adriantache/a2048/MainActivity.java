@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView resetTV;
     private TextView scoreTV;
 
-    //placeholder
-    private TextView blank;
-
     //define board matrix
     private int[][] board = new int[4][4];
 
@@ -99,16 +96,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         this.mDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
-    }
-
-    private void interpretTouch(float velocityX, float velocityY) {
-        if (Math.abs(velocityX) > Math.abs(velocityY) && Math.abs(velocityX) > 100) {
-            if (velocityX > 0) btnRight(blank);
-            else btnLeft(blank);
-        } else if (Math.abs(velocityY) > 100) {
-            if (velocityY < 0) btnUp(blank);
-            else btnDown(blank);
-        }
     }
 
     //set all scores based on the board values
@@ -241,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
     //add coloured backgrounds to text based on value
     private void colorizeText(TextView view) {
         String value = view.getText().toString();
-        int val = Integer.valueOf(value);
+        int val = Integer.parseInt(value);
         int pow = 0;
         while (val > 1) {
             val /= 2;
@@ -321,8 +308,7 @@ public class MainActivity extends AppCompatActivity {
     private void generateNewNumbers(int amount) {
         Random random = new java.util.Random();
 
-        while (amount > 0 && !detectFullBoard()) {
-
+        while (amount > 0 && boardNotFull()) {
             row = random.nextInt(4);
             column = random.nextInt(4);
 
@@ -340,25 +326,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //detect if the board is full in order to prevent overwriting
-    @org.jetbrains.annotations.Contract(pure = true)
-    private boolean detectFullBoard() {
+    private boolean boardNotFull() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if (board[i][j] == 0) return false;
+                if (board[i][j] == 0) return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     //detect if all adjacent numbers are unique
     private boolean detectImpasse() {
-        if (!detectFullBoard()) return false;
+        if (boardNotFull()) return false;
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if (i < 3) if (board[i][j] == board[i + 1][j]) return false;
-                if (j < 3) if (board[i][j] == board[i][j + 1]) return false;
+                if (i < 3 && board[i][j] == board[i + 1][j]) return false;
+                if (j < 3 && board[i][j] == board[i][j + 1]) return false;
             }
         }
 
@@ -619,6 +604,9 @@ public class MainActivity extends AppCompatActivity {
         //variable for storing score
         score = 0;
 
+        //reset new number value
+        newNumberValue = 2;
+
         //spawn first two values
         generateNewNumbers(2);
 
@@ -633,9 +621,6 @@ public class MainActivity extends AppCompatActivity {
 
         //detect first move for highlighting
         firstMove = true;
-
-        //reset new number value
-        newNumberValue = 2;
     }
 
     public void cheat(View view) {
@@ -655,12 +640,50 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "You filthy casual!", Toast.LENGTH_SHORT).show();
     }
 
+    public void upgrade(View view) {
+        int smallestValue = board[0][0];
+
+        //get smallest board value
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] < smallestValue) smallestValue = board[i][j];
+            }
+        }
+
+        //set all smallest numbers to 2x
+        //get smallest board value
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] == smallestValue) board[i][j] *= 2;
+            }
+        }
+
+        //set all generated numbers to double the smallest value
+        newNumberValue = smallestValue * 2;
+
+        //and update the display
+        updateScores();
+
+        Toast.makeText(this, "You bring dishonor to this game!", Toast.LENGTH_SHORT).show();
+
+    }
+
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY) {
             interpretTouch(velocityX, velocityY);
             return true;
+        }
+
+        private void interpretTouch(float velocityX, float velocityY) {
+            if (Math.abs(velocityX) > Math.abs(velocityY) && Math.abs(velocityX) > 100) {
+                if (velocityX > 0) btnRight(null);
+                else btnLeft(null);
+            } else if (Math.abs(velocityY) > 100) {
+                if (velocityY < 0) btnUp(null);
+                else btnDown(null);
+            }
         }
     }
 }
