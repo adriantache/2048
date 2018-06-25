@@ -641,11 +641,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void upgrade(View view) {
-        int smallestValue = board[0][0];
+        int smallestValue = 2;
+
+        //get largest board value
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] > smallestValue) smallestValue = board[i][j];
+            }
+        }
 
         //get smallest board value
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
+                if (board[i][j]==0) continue;
+
                 if (board[i][j] < smallestValue) smallestValue = board[i][j];
             }
         }
