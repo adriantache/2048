@@ -1,11 +1,15 @@
 package com.adriantache.a2048;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -623,24 +627,9 @@ public class MainActivity extends AppCompatActivity {
         firstMove = true;
     }
 
-    public void cheat(View view) {
-        //set entire board to 512
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                board[i][j] = 512;
-            }
-        }
+    public void upgrade() {
+        //todo disable scoring when cheating
 
-        //set all generated numbers to 512
-        newNumberValue = 512;
-
-        //and update the display
-        updateScores();
-
-        Toast.makeText(this, "You filthy casual!", Toast.LENGTH_SHORT).show();
-    }
-
-    public void upgrade(View view) {
         int smallestValue = 2;
 
         //get largest board value
@@ -690,5 +679,23 @@ public class MainActivity extends AppCompatActivity {
                 else btnDown(null);
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_editor.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_upgrade) {
+            upgrade();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
