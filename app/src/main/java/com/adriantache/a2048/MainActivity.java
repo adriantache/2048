@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     //variable for storing score
     private int score = 0;
 
+    //define final score for cheating or after 2048 is reached
+    private int finalScore = 0;
+
     //detect first move for highlighting
     private boolean firstMove = true;
 
@@ -581,7 +584,7 @@ public class MainActivity extends AppCompatActivity {
     //detect if game is lost
     private void gameLoss() {
         if (detectImpasse()) {
-            String result = "Game Over\nScore: " + score;
+            String result = "Game Over at score: " + score;
             scoreTV.setText(result);
             resetTV.setVisibility(View.VISIBLE);
         }
@@ -589,15 +592,19 @@ public class MainActivity extends AppCompatActivity {
 
     //detect if game is won
     private void gameWon() {
-        String result = "Game Won\nScore: " + score;
+        String result = "Game Won at score: " + score;
         scoreTV.setText(result);
         resetTV.setVisibility(View.VISIBLE);
     }
 
     //display score
     private void updateTotalScore() {
+        if (finalScore == 0) {
         String result = "Score: " + score;
-        scoreTV.setText(result);
+        scoreTV.setText(result); }
+        else {
+            //todo test for win, loss, cheat
+        }
     }
 
     //reset game
