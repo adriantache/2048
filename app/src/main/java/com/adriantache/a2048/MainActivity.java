@@ -1,10 +1,8 @@
 package com.adriantache.a2048;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
@@ -106,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //set all scores based on the board values
+    //todo improve readability with large numbers (use 2^x notation instead)
     private void updateScores() {
         //set all values first to ensure values that change to zero are reset
         column13.setText(String.valueOf(board[0][2]));
@@ -233,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //add coloured backgrounds to text based on value
+    //todo improve readability with large numbers
     private void colorizeText(TextView view) {
         String value = view.getText().toString();
         int val = Integer.parseInt(value);
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = i - 1; k >= 0; k--) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            score += temp;
+                            if (finalScore >= 0 && finalScore != 1) score += temp;
                             updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -425,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = i + 1; k < 4; k++) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            score += temp;
+                            if (finalScore >= 0 && finalScore != 1) score += temp;
                             updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -481,7 +481,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = j + 1; k < 4; k++) {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            score += temp;
+                            if (finalScore >= 0 && finalScore != 1) score += temp;
                             updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -537,7 +537,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = j - 1; k >= 0; k--) {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            score += temp;
+                            if (finalScore >= 0 && finalScore != 1) score += temp;
                             updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -584,26 +584,33 @@ public class MainActivity extends AppCompatActivity {
     //detect if game is lost
     private void gameLoss() {
         if (detectImpasse()) {
-            String result = "Game Over at score: " + score;
-            scoreTV.setText(result);
+            finalScore = score;
+            updateTotalScore();
             resetTV.setVisibility(View.VISIBLE);
         }
     }
 
     //detect if game is won
     private void gameWon() {
-        String result = "Game Won at score: " + score;
-        scoreTV.setText(result);
+        finalScore = 1;
+        updateTotalScore();
         resetTV.setVisibility(View.VISIBLE);
     }
 
     //display score
     private void updateTotalScore() {
         if (finalScore == 0) {
-        String result = "Score: " + score;
-        scoreTV.setText(result); }
-        else {
-            //todo test for win, loss, cheat
+            String result = "Score: " + score;
+            scoreTV.setText(result);
+        } else if (finalScore < 0) {
+            String result = "Cheater!";
+            scoreTV.setText(result);
+        } else if (finalScore == 1) {
+            String result = "Game WIN at " + score;
+            scoreTV.setText(result);
+        } else {
+            String result = "Game Over at " + finalScore;
+            scoreTV.setText(result);
         }
     }
 
@@ -632,19 +639,14 @@ public class MainActivity extends AppCompatActivity {
 
         //detect first move for highlighting
         firstMove = true;
+
+        //reset final score
+        finalScore = 0;
     }
 
+    //cheating method
     public void upgrade() {
-        //todo disable scoring when cheating
-
         int smallestValue = 2;
-
-        //get largest board value
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (board[i][j] > smallestValue) smallestValue = board[i][j];
-            }
-        }
 
         //get smallest board value
         for (int i = 0; i < 4; i++) {
@@ -663,10 +665,31 @@ public class MainActivity extends AppCompatActivity {
         //set all generated numbers to double the smallest value
         newNumberValue = smallestValue * 2;
 
+        //set finalScore to cheating value
+        finalScore = -1;
+
         //and update the display
         updateScores();
 
         Toast.makeText(this, "You bring dishonor to this game!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_editor.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_upgrade) {
+            upgrade();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -686,23 +709,5 @@ public class MainActivity extends AppCompatActivity {
                 else btnDown(null);
             }
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_editor.xml file.
-        // This adds menu items to the app bar.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_upgrade) {
-            upgrade();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
