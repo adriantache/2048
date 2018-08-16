@@ -672,9 +672,17 @@ public class MainActivity extends AppCompatActivity {
 
     //cheating method
     public void upgrade() {
+        //init this as the smallest possible value on the board
         int smallestValue = 2;
 
-        //get smallest board value
+        //get largest board value and store it in smallestValue
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] > smallestValue) smallestValue = board[i][j];
+            }
+        }
+
+        //get smallest board value by storing it if smaller than the largest value as found above
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (board[i][j] != 0 && board[i][j] < smallestValue) smallestValue = board[i][j];
