@@ -369,7 +369,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = i - 1; k >= 0; k--) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            if (finalScore >= 0 && finalScore != 1) score += temp;
+                            //only update score if game is neither cheated nor won
+                            if (Math.abs(finalScore) != 1) score += temp;
                             updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -425,7 +426,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = i + 1; k < 4; k++) {
                         if (board[k][j] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            if (finalScore >= 0 && finalScore != 1) score += temp;
+                            //only update score if game is neither cheated nor won
+                            if (Math.abs(finalScore) != 1) score += temp;
                             updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -481,7 +483,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = j + 1; k < 4; k++) {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            if (finalScore >= 0 && finalScore != 1) score += temp;
+                            //only update score if game is neither cheated nor won
+                            if (Math.abs(finalScore) != 1) score += temp;
                             updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -537,7 +540,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int k = j - 1; k >= 0; k--) {
                         if (board[i][k] == board[i][j]) {
                             int temp = board[i][j] * 2;
-                            if (finalScore >= 0 && finalScore != 1) score += temp;
+                            //only update score if game is neither cheated nor won
+                            if (Math.abs(finalScore) != 1) score += temp;
                             updateTotalScore();
                             if (temp == 2048) gameWon();
                             board[i][j] = temp;
@@ -583,17 +587,20 @@ public class MainActivity extends AppCompatActivity {
 
     //detect if game is lost
     private void gameLoss() {
-        if (detectImpasse() && finalScore != -1) {
-            finalScore = score;
-            updateTotalScore();
+        if (detectImpasse()) {
             resetTV.setVisibility(View.VISIBLE);
+
+            if (Math.abs(finalScore) != 1) {
+                finalScore = score;
+                updateTotalScore();
+            }
         }
     }
 
     //detect if game is won
     private void gameWon() {
-        if (finalScore != -1)
-            finalScore = 1;
+        //setting game won to a final score of 1 since it's odd
+        if (finalScore != -1) finalScore = 1;
         updateTotalScore();
         resetTV.setVisibility(View.VISIBLE);
     }
@@ -603,7 +610,7 @@ public class MainActivity extends AppCompatActivity {
         if (finalScore == 0) {
             String result = "Score: " + score;
             scoreTV.setText(result);
-        } else if (finalScore < 0) {
+        } else if (finalScore == -1) {
             String result = "Cheater!";
             scoreTV.setText(result);
         } else if (finalScore == 1) {
