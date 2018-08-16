@@ -711,6 +711,9 @@ public class MainActivity extends AppCompatActivity {
         //and update the display
         updateGameBoard();
 
+        //show reset button
+        resetTV.setVisibility(View.VISIBLE);
+
         Toast.makeText(this, "You bring dishonor to this game!", Toast.LENGTH_SHORT).show();
     }
 
