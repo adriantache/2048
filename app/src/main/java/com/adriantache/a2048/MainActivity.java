@@ -583,7 +583,7 @@ public class MainActivity extends AppCompatActivity {
 
     //detect if game is lost
     private void gameLoss() {
-        if (detectImpasse()) {
+        if (detectImpasse() && finalScore != -1) {
             finalScore = score;
             updateTotalScore();
             resetTV.setVisibility(View.VISIBLE);
@@ -592,7 +592,8 @@ public class MainActivity extends AppCompatActivity {
 
     //detect if game is won
     private void gameWon() {
-        finalScore = 1;
+        if (finalScore != -1)
+            finalScore = 1;
         updateTotalScore();
         resetTV.setVisibility(View.VISIBLE);
     }
