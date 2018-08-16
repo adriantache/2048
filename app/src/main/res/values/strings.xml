@@ -4,5 +4,5 @@
     <string name="left">LEFT</string>
     <string name="right">RIGHT</string>
     <string name="down">DOWN</string>
-    <string name="score_n_a">Score: n/a</string>
+    <string name="reset">RESET</string>
 </resources>
