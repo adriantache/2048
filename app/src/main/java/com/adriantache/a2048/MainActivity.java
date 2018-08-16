@@ -107,22 +107,22 @@ public class MainActivity extends AppCompatActivity {
     private void updateGameBoard() {
         //set all values first to ensure values that change to zero are reset
         //for large values, use 2^n notation
-        column11.setText((String.valueOf(board[0][0]).length() < 5) ? String.valueOf(board[0][0]) : getPowTwo(board[0][0]));
-        column12.setText((String.valueOf(board[0][1]).length() < 5) ? String.valueOf(board[0][1]) : getPowTwo(board[0][1]));
-        column13.setText((String.valueOf(board[0][2]).length() < 5) ? String.valueOf(board[0][2]) : getPowTwo(board[0][2]));
-        column14.setText((String.valueOf(board[0][3]).length() < 5) ? String.valueOf(board[0][3]) : getPowTwo(board[0][3]));
-        column21.setText((String.valueOf(board[1][0]).length() < 5) ? String.valueOf(board[1][0]) : getPowTwo(board[1][0]));
-        column22.setText((String.valueOf(board[1][1]).length() < 5) ? String.valueOf(board[1][1]) : getPowTwo(board[1][1]));
-        column23.setText((String.valueOf(board[1][2]).length() < 5) ? String.valueOf(board[1][2]) : getPowTwo(board[1][2]));
-        column24.setText((String.valueOf(board[1][3]).length() < 5) ? String.valueOf(board[1][3]) : getPowTwo(board[1][3]));
-        column31.setText((String.valueOf(board[2][0]).length() < 5) ? String.valueOf(board[2][0]) : getPowTwo(board[2][0]));
-        column32.setText((String.valueOf(board[2][1]).length() < 5) ? String.valueOf(board[2][1]) : getPowTwo(board[2][1]));
-        column33.setText((String.valueOf(board[2][2]).length() < 5) ? String.valueOf(board[2][2]) : getPowTwo(board[2][2]));
-        column34.setText((String.valueOf(board[2][3]).length() < 5) ? String.valueOf(board[2][3]) : getPowTwo(board[2][3]));
-        column41.setText((String.valueOf(board[3][0]).length() < 5) ? String.valueOf(board[3][0]) : getPowTwo(board[3][0]));
-        column42.setText((String.valueOf(board[3][1]).length() < 5) ? String.valueOf(board[3][1]) : getPowTwo(board[3][1]));
-        column43.setText((String.valueOf(board[3][2]).length() < 5) ? String.valueOf(board[3][2]) : getPowTwo(board[3][2]));
-        column44.setText((String.valueOf(board[3][3]).length() < 5) ? String.valueOf(board[3][3]) : getPowTwo(board[3][3]));
+        column11.setText((String.valueOf(board[0][0]).length() < 5) ? String.valueOf(board[0][0]) : getPowTwoString(board[0][0]));
+        column12.setText((String.valueOf(board[0][1]).length() < 5) ? String.valueOf(board[0][1]) : getPowTwoString(board[0][1]));
+        column13.setText((String.valueOf(board[0][2]).length() < 5) ? String.valueOf(board[0][2]) : getPowTwoString(board[0][2]));
+        column14.setText((String.valueOf(board[0][3]).length() < 5) ? String.valueOf(board[0][3]) : getPowTwoString(board[0][3]));
+        column21.setText((String.valueOf(board[1][0]).length() < 5) ? String.valueOf(board[1][0]) : getPowTwoString(board[1][0]));
+        column22.setText((String.valueOf(board[1][1]).length() < 5) ? String.valueOf(board[1][1]) : getPowTwoString(board[1][1]));
+        column23.setText((String.valueOf(board[1][2]).length() < 5) ? String.valueOf(board[1][2]) : getPowTwoString(board[1][2]));
+        column24.setText((String.valueOf(board[1][3]).length() < 5) ? String.valueOf(board[1][3]) : getPowTwoString(board[1][3]));
+        column31.setText((String.valueOf(board[2][0]).length() < 5) ? String.valueOf(board[2][0]) : getPowTwoString(board[2][0]));
+        column32.setText((String.valueOf(board[2][1]).length() < 5) ? String.valueOf(board[2][1]) : getPowTwoString(board[2][1]));
+        column33.setText((String.valueOf(board[2][2]).length() < 5) ? String.valueOf(board[2][2]) : getPowTwoString(board[2][2]));
+        column34.setText((String.valueOf(board[2][3]).length() < 5) ? String.valueOf(board[2][3]) : getPowTwoString(board[2][3]));
+        column41.setText((String.valueOf(board[3][0]).length() < 5) ? String.valueOf(board[3][0]) : getPowTwoString(board[3][0]));
+        column42.setText((String.valueOf(board[3][1]).length() < 5) ? String.valueOf(board[3][1]) : getPowTwoString(board[3][1]));
+        column43.setText((String.valueOf(board[3][2]).length() < 5) ? String.valueOf(board[3][2]) : getPowTwoString(board[3][2]));
+        column44.setText((String.valueOf(board[3][3]).length() < 5) ? String.valueOf(board[3][3]) : getPowTwoString(board[3][3]));
 
         //reset all colors
         resetColorFilters();
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String getPowTwo(int number) {
+    private String getPowTwoString(int number) {
         int pow = 0;
 
         while (number > 1) {
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
             pow++;
         }
 
-        return "2^"+pow;
+        return "2^" + pow;
     }
 
     public Animation getBlinkAnimation() {
@@ -246,51 +246,56 @@ public class MainActivity extends AppCompatActivity {
     //todo improve readability with large numbers
     private void colorizeText(TextView view) {
         String value = view.getText().toString();
-        int val = Integer.parseInt(value);
-        int pow = 0;
-        while (val > 1) {
-            val /= 2;
-            pow++;
-        }
 
-        //apply color filter based on power of 2
-        switch (pow) {
-            case 1:
-                view.getBackground().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.ADD);
-                break;
-            case 2:
-                view.getBackground().setColorFilter(Color.parseColor("#7E57C2"), PorterDuff.Mode.ADD);
-                break;
-            case 3:
-                view.getBackground().setColorFilter(Color.parseColor("#ef5350"), PorterDuff.Mode.ADD);
-                break;
-            case 4:
-                view.getBackground().setColorFilter(Color.parseColor("#EC407A"), PorterDuff.Mode.ADD);
-                break;
-            case 5:
-                view.getBackground().setColorFilter(Color.parseColor("#26A69A"), PorterDuff.Mode.ADD);
-                break;
-            case 6:
-                view.getBackground().setColorFilter(Color.parseColor("#D4E157"), PorterDuff.Mode.ADD);
-                break;
-            case 7:
-                view.getBackground().setColorFilter(Color.parseColor("#FFCA28"), PorterDuff.Mode.ADD);
-                break;
-            case 8:
-                view.getBackground().setColorFilter(Color.parseColor("#FFA726"), PorterDuff.Mode.ADD);
-                break;
-            case 9:
-                view.getBackground().setColorFilter(Color.parseColor("#E91E63"), PorterDuff.Mode.ADD);
-                break;
-            case 10:
-                view.getBackground().setColorFilter(Color.parseColor("#66BB6A"), PorterDuff.Mode.ADD);
-                break;
-            case 11:
-                view.getBackground().setColorFilter(Color.parseColor("#FFEB3B"), PorterDuff.Mode.ADD);
-                break;
-            default:
-                view.getBackground().setColorFilter(Color.parseColor("#607D8B"), PorterDuff.Mode.ADD);
-                break;
+        if (value.contains("^")) {
+            view.getBackground().setColorFilter(Color.parseColor("#ffffff"), PorterDuff.Mode.ADD);
+        } else {
+            //apply color filter based on power of 2
+            int val = Integer.parseInt(value);
+            int pow = 0;
+            while (val > 1) {
+                val /= 2;
+                pow++;
+            }
+
+            switch (pow) {
+                case 1:
+                    view.getBackground().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.ADD);
+                    break;
+                case 2:
+                    view.getBackground().setColorFilter(Color.parseColor("#7E57C2"), PorterDuff.Mode.ADD);
+                    break;
+                case 3:
+                    view.getBackground().setColorFilter(Color.parseColor("#ef5350"), PorterDuff.Mode.ADD);
+                    break;
+                case 4:
+                    view.getBackground().setColorFilter(Color.parseColor("#EC407A"), PorterDuff.Mode.ADD);
+                    break;
+                case 5:
+                    view.getBackground().setColorFilter(Color.parseColor("#26A69A"), PorterDuff.Mode.ADD);
+                    break;
+                case 6:
+                    view.getBackground().setColorFilter(Color.parseColor("#D4E157"), PorterDuff.Mode.ADD);
+                    break;
+                case 7:
+                    view.getBackground().setColorFilter(Color.parseColor("#FFCA28"), PorterDuff.Mode.ADD);
+                    break;
+                case 8:
+                    view.getBackground().setColorFilter(Color.parseColor("#FFA726"), PorterDuff.Mode.ADD);
+                    break;
+                case 9:
+                    view.getBackground().setColorFilter(Color.parseColor("#E91E63"), PorterDuff.Mode.ADD);
+                    break;
+                case 10:
+                    view.getBackground().setColorFilter(Color.parseColor("#66BB6A"), PorterDuff.Mode.ADD);
+                    break;
+                case 11:
+                    view.getBackground().setColorFilter(Color.parseColor("#FFEB3B"), PorterDuff.Mode.ADD);
+                    break;
+                default:
+                    view.getBackground().setColorFilter(Color.parseColor("#607D8B"), PorterDuff.Mode.ADD);
+                    break;
+            }
         }
 
         //call for text resize here, since we already know which view it applies to
