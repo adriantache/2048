@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         generateNewNumbers(2);
 
         //display the board for a new game
-        updateScores();
+        updateGameBoard();
 
         //set up touch gestures
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
@@ -104,25 +104,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //set all scores based on the board values
-    //todo improve readability with large numbers (use 2^x notation instead)
-    private void updateScores() {
+    private void updateGameBoard() {
         //set all values first to ensure values that change to zero are reset
-        column13.setText(String.valueOf(board[0][2]));
-        column12.setText(String.valueOf(board[0][1]));
-        column11.setText(String.valueOf(board[0][0]));
-        column14.setText(String.valueOf(board[0][3]));
-        column21.setText(String.valueOf(board[1][0]));
-        column22.setText(String.valueOf(board[1][1]));
-        column23.setText(String.valueOf(board[1][2]));
-        column24.setText(String.valueOf(board[1][3]));
-        column31.setText(String.valueOf(board[2][0]));
-        column32.setText(String.valueOf(board[2][1]));
-        column33.setText(String.valueOf(board[2][2]));
-        column34.setText(String.valueOf(board[2][3]));
-        column41.setText(String.valueOf(board[3][0]));
-        column42.setText(String.valueOf(board[3][1]));
-        column43.setText(String.valueOf(board[3][2]));
-        column44.setText(String.valueOf(board[3][3]));
+        //for large values, use 2^n notation
+        column11.setText((String.valueOf(board[0][0]).length() < 5) ? String.valueOf(board[0][0]) : getPowTwo(board[0][0]));
+        column12.setText((String.valueOf(board[0][1]).length() < 5) ? String.valueOf(board[0][1]) : getPowTwo(board[0][1]));
+        column13.setText((String.valueOf(board[0][2]).length() < 5) ? String.valueOf(board[0][2]) : getPowTwo(board[0][2]));
+        column14.setText((String.valueOf(board[0][3]).length() < 5) ? String.valueOf(board[0][3]) : getPowTwo(board[0][3]));
+        column21.setText((String.valueOf(board[1][0]).length() < 5) ? String.valueOf(board[1][0]) : getPowTwo(board[1][0]));
+        column22.setText((String.valueOf(board[1][1]).length() < 5) ? String.valueOf(board[1][1]) : getPowTwo(board[1][1]));
+        column23.setText((String.valueOf(board[1][2]).length() < 5) ? String.valueOf(board[1][2]) : getPowTwo(board[1][2]));
+        column24.setText((String.valueOf(board[1][3]).length() < 5) ? String.valueOf(board[1][3]) : getPowTwo(board[1][3]));
+        column31.setText((String.valueOf(board[2][0]).length() < 5) ? String.valueOf(board[2][0]) : getPowTwo(board[2][0]));
+        column32.setText((String.valueOf(board[2][1]).length() < 5) ? String.valueOf(board[2][1]) : getPowTwo(board[2][1]));
+        column33.setText((String.valueOf(board[2][2]).length() < 5) ? String.valueOf(board[2][2]) : getPowTwo(board[2][2]));
+        column34.setText((String.valueOf(board[2][3]).length() < 5) ? String.valueOf(board[2][3]) : getPowTwo(board[2][3]));
+        column41.setText((String.valueOf(board[3][0]).length() < 5) ? String.valueOf(board[3][0]) : getPowTwo(board[3][0]));
+        column42.setText((String.valueOf(board[3][1]).length() < 5) ? String.valueOf(board[3][1]) : getPowTwo(board[3][1]));
+        column43.setText((String.valueOf(board[3][2]).length() < 5) ? String.valueOf(board[3][2]) : getPowTwo(board[3][2]));
+        column44.setText((String.valueOf(board[3][3]).length() < 5) ? String.valueOf(board[3][3]) : getPowTwo(board[3][3]));
 
         //reset all colors
         resetColorFilters();
@@ -199,6 +199,17 @@ public class MainActivity extends AppCompatActivity {
                     column44.startAnimation(getBlinkAnimation());
             }
         }
+    }
+
+    private String getPowTwo(int number) {
+        int pow = 0;
+
+        while (number > 1) {
+            number /= 2;
+            pow++;
+        }
+
+        return "2^"+pow;
     }
 
     public Animation getBlinkAnimation() {
@@ -410,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
             generateNewNumbers(1);
 
             //update display
-            updateScores();
+            updateGameBoard();
         }
     }
 
@@ -467,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
             generateNewNumbers(1);
 
             //update display
-            updateScores();
+            updateGameBoard();
         }
     }
 
@@ -524,7 +535,7 @@ public class MainActivity extends AppCompatActivity {
             generateNewNumbers(1);
 
             //update display
-            updateScores();
+            updateGameBoard();
         }
     }
 
@@ -581,7 +592,7 @@ public class MainActivity extends AppCompatActivity {
             generateNewNumbers(1);
 
             //update display
-            updateScores();
+            updateGameBoard();
         }
     }
 
@@ -644,7 +655,7 @@ public class MainActivity extends AppCompatActivity {
         generateNewNumbers(2);
 
         //display the board for a new game
-        updateScores();
+        updateGameBoard();
 
         //reset score display
         updateTotalScore();
@@ -685,7 +696,7 @@ public class MainActivity extends AppCompatActivity {
         updateTotalScore();
 
         //and update the display
-        updateScores();
+        updateGameBoard();
 
         Toast.makeText(this, "You bring dishonor to this game!", Toast.LENGTH_SHORT).show();
     }
