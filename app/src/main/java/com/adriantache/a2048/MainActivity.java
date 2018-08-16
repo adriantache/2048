@@ -607,16 +607,23 @@ public class MainActivity extends AppCompatActivity {
 
     //display score
     private void updateTotalScore() {
+        //if we have no finalScore, it means the game is just in progress
         if (finalScore == 0) {
             String result = "Score: " + score;
             scoreTV.setText(result);
-        } else if (finalScore == -1) {
+        }
+        //if we have finalScore of -1, it means the player cheated, as set in the upgrade() method
+        else if (finalScore == -1) {
             String result = "Cheater!";
             scoreTV.setText(result);
-        } else if (finalScore == 1) {
+        }
+        //if we have finalScore of 1, it means the player won, as set in the gameWon() method
+        else if (finalScore == 1) {
             String result = "Game WIN at " + score;
             scoreTV.setText(result);
-        } else {
+        }
+        //otherwise the game is just over and finalScore represents the, um, final score
+        else {
             String result = "Game Over at " + finalScore;
             scoreTV.setText(result);
         }
