@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
     //define default value of new generated numbers
     private int newNumberValue = 2;
 
+    //cheat ImageButton
+    private ImageButton upgrade;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
         //set up touch gestures
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
+
+        //find and setup cheat ImageButton
+        upgrade = findViewById(R.id.upgrade);
+        upgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upgrade();
+            }
+        });
     }
 
     //capture touches https://developer.android.com/training/gestures/movement.html
