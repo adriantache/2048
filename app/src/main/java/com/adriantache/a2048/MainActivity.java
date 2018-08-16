@@ -665,8 +665,9 @@ public class MainActivity extends AppCompatActivity {
         //set all generated numbers to double the smallest value
         newNumberValue = smallestValue * 2;
 
-        //set finalScore to cheating value
+        //set finalScore to cheating value and update score
         finalScore = -1;
+        updateTotalScore();
 
         //and update the display
         updateScores();
