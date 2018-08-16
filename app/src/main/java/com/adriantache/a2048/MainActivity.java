@@ -730,24 +730,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "You bring dishonor to this game!", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_editor.xml file.
-        // This adds menu items to the app bar.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_upgrade) {
-            upgrade();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2,
