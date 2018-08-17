@@ -256,12 +256,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //add coloured backgrounds to text based on value
-    //todo improve readability with large numbers
     private void colorizeText(TextView view) {
         String value = view.getText().toString();
 
         if (value.contains("^")) {
-            view.getBackground().setColorFilter(Color.parseColor("#ffffff"), PorterDuff.Mode.ADD);
+            view.getBackground().setColorFilter(null);
         } else {
             //apply color filter based on power of 2
             int val = Integer.parseInt(value);
