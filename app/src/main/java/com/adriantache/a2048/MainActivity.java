@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -120,22 +121,22 @@ public class MainActivity extends AppCompatActivity {
     private void updateGameBoard() {
         //set all values first to ensure values that change to zero are reset
         //for large values, use 2^n notation
-        column11.setText((String.valueOf(board[0][0]).length() < 5) ? String.valueOf(board[0][0]) : getPowTwoString(board[0][0]));
-        column12.setText((String.valueOf(board[0][1]).length() < 5) ? String.valueOf(board[0][1]) : getPowTwoString(board[0][1]));
-        column13.setText((String.valueOf(board[0][2]).length() < 5) ? String.valueOf(board[0][2]) : getPowTwoString(board[0][2]));
-        column14.setText((String.valueOf(board[0][3]).length() < 5) ? String.valueOf(board[0][3]) : getPowTwoString(board[0][3]));
-        column21.setText((String.valueOf(board[1][0]).length() < 5) ? String.valueOf(board[1][0]) : getPowTwoString(board[1][0]));
-        column22.setText((String.valueOf(board[1][1]).length() < 5) ? String.valueOf(board[1][1]) : getPowTwoString(board[1][1]));
-        column23.setText((String.valueOf(board[1][2]).length() < 5) ? String.valueOf(board[1][2]) : getPowTwoString(board[1][2]));
-        column24.setText((String.valueOf(board[1][3]).length() < 5) ? String.valueOf(board[1][3]) : getPowTwoString(board[1][3]));
-        column31.setText((String.valueOf(board[2][0]).length() < 5) ? String.valueOf(board[2][0]) : getPowTwoString(board[2][0]));
-        column32.setText((String.valueOf(board[2][1]).length() < 5) ? String.valueOf(board[2][1]) : getPowTwoString(board[2][1]));
-        column33.setText((String.valueOf(board[2][2]).length() < 5) ? String.valueOf(board[2][2]) : getPowTwoString(board[2][2]));
-        column34.setText((String.valueOf(board[2][3]).length() < 5) ? String.valueOf(board[2][3]) : getPowTwoString(board[2][3]));
-        column41.setText((String.valueOf(board[3][0]).length() < 5) ? String.valueOf(board[3][0]) : getPowTwoString(board[3][0]));
-        column42.setText((String.valueOf(board[3][1]).length() < 5) ? String.valueOf(board[3][1]) : getPowTwoString(board[3][1]));
-        column43.setText((String.valueOf(board[3][2]).length() < 5) ? String.valueOf(board[3][2]) : getPowTwoString(board[3][2]));
-        column44.setText((String.valueOf(board[3][3]).length() < 5) ? String.valueOf(board[3][3]) : getPowTwoString(board[3][3]));
+        column11.setText((String.valueOf(board[0][0]).length() < 5) ? String.valueOf(board[0][0]) : Html.fromHtml(getPowTwoString(board[0][0])));
+        column12.setText((String.valueOf(board[0][1]).length() < 5) ? String.valueOf(board[0][1]) : Html.fromHtml(getPowTwoString(board[0][1])));
+        column13.setText((String.valueOf(board[0][2]).length() < 5) ? String.valueOf(board[0][2]) : Html.fromHtml(getPowTwoString(board[0][2])));
+        column14.setText((String.valueOf(board[0][3]).length() < 5) ? String.valueOf(board[0][3]) : Html.fromHtml(getPowTwoString(board[0][3])));
+        column21.setText((String.valueOf(board[1][0]).length() < 5) ? String.valueOf(board[1][0]) : Html.fromHtml(getPowTwoString(board[1][0])));
+        column22.setText((String.valueOf(board[1][1]).length() < 5) ? String.valueOf(board[1][1]) : Html.fromHtml(getPowTwoString(board[1][1])));
+        column23.setText((String.valueOf(board[1][2]).length() < 5) ? String.valueOf(board[1][2]) : Html.fromHtml(getPowTwoString(board[1][2])));
+        column24.setText((String.valueOf(board[1][3]).length() < 5) ? String.valueOf(board[1][3]) : Html.fromHtml(getPowTwoString(board[1][3])));
+        column31.setText((String.valueOf(board[2][0]).length() < 5) ? String.valueOf(board[2][0]) : Html.fromHtml(getPowTwoString(board[2][0])));
+        column32.setText((String.valueOf(board[2][1]).length() < 5) ? String.valueOf(board[2][1]) : Html.fromHtml(getPowTwoString(board[2][1])));
+        column33.setText((String.valueOf(board[2][2]).length() < 5) ? String.valueOf(board[2][2]) : Html.fromHtml(getPowTwoString(board[2][2])));
+        column34.setText((String.valueOf(board[2][3]).length() < 5) ? String.valueOf(board[2][3]) : Html.fromHtml(getPowTwoString(board[2][3])));
+        column41.setText((String.valueOf(board[3][0]).length() < 5) ? String.valueOf(board[3][0]) : Html.fromHtml(getPowTwoString(board[3][0])));
+        column42.setText((String.valueOf(board[3][1]).length() < 5) ? String.valueOf(board[3][1]) : Html.fromHtml(getPowTwoString(board[3][1])));
+        column43.setText((String.valueOf(board[3][2]).length() < 5) ? String.valueOf(board[3][2]) : Html.fromHtml(getPowTwoString(board[3][2])));
+        column44.setText((String.valueOf(board[3][3]).length() < 5) ? String.valueOf(board[3][3]) : Html.fromHtml(getPowTwoString(board[3][3])));
 
         //reset all colors
         resetColorFilters();
@@ -222,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
             pow++;
         }
 
-        return "2^" + pow;
+        return "2<sup>" + pow+"</sup>";
     }
 
     public Animation getBlinkAnimation() {
